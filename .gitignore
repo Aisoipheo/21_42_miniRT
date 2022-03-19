@@ -1,3 +1,7 @@
+obj
+miniRT
+*.txt
+
 # Prerequisites
 *.d
 
