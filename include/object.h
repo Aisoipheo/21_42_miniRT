@@ -1,27 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   object.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/19 16:31:31 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/03/26 15:34:09 by rdrizzle         ###   ########.fr       */
+/*   Created: 2022/03/26 14:04:44 by rdrizzle          #+#    #+#             */
+/*   Updated: 2022/03/26 15:03:38 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx.h"
-#include "miniRT.h"
-#include "vec3.h"
-#include "benchmark.h"
+#ifndef OBJECT_H
+# define OBJECT_H
 
-int	main(int argc, char *argv[])
+# include "vec3.h"
+
+# define OBJ_SPHERE 1
+# define OBJ_PLANE 2
+# define OBJ_CYLINDER 3
+
+
+// type
+// position
+// rotation / direction
+// color
+// light absorbtion [0; 1]
+
+typedef struct s_object
 {
-	t_info	info;
-	(void)argc;
-	(void)argv;
-	debug_init();
-	if (rt_init(&info))
-		return (rt_destroy(&info));
-	return (0);
-}
+	int				type;
+	t_vec3			p;
+	t_vec3			r;
+	t_color			c;
+	double			a;
+}	t_object;
+
+void	obj_copy(t_object *lhs, t_object *rhs);
+
+#endif

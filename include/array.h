@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   array.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/19 16:31:31 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/03/26 15:34:09 by rdrizzle         ###   ########.fr       */
+/*   Created: 2022/03/26 14:03:46 by rdrizzle          #+#    #+#             */
+/*   Updated: 2022/03/26 14:55:09 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx.h"
-#include "miniRT.h"
-#include "vec3.h"
-#include "benchmark.h"
+#ifndef ARRAY_H
+# define ARRAY_H
 
-int	main(int argc, char *argv[])
+# include "object.h"
+
+typedef unsigned int t_uint;
+
+typedef struct s_array
 {
-	t_info	info;
-	(void)argc;
-	(void)argv;
-	debug_init();
-	if (rt_init(&info))
-		return (rt_destroy(&info));
-	return (0);
-}
+	t_object	*arr;
+	t_uint		capacity;
+	t_uint		last;
+}	t_array;
+
+t_array		*arr_new(t_uint size);
+int			arr_init(t_array *self, t_uint size);
+int			arr_push(t_array *self, t_object *obj);
+int			arr_realloc(t_array *self);
+void		*arr_free(t_array *self);
+
+#endif

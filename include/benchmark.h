@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   benchmark.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/19 16:31:31 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/03/26 15:34:09 by rdrizzle         ###   ########.fr       */
+/*   Created: 2022/03/21 15:53:58 by rdrizzle          #+#    #+#             */
+/*   Updated: 2022/03/21 16:26:41 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx.h"
-#include "miniRT.h"
-#include "vec3.h"
-#include "benchmark.h"
+#ifndef BENCHMARK_H
+# define BENCHMARK_H
 
-int	main(int argc, char *argv[])
-{
-	t_info	info;
-	(void)argc;
-	(void)argv;
-	debug_init();
-	if (rt_init(&info))
-		return (rt_destroy(&info));
-	return (0);
-}
+# include <sys/time.h>
+# include <sys/resource.h>
+# include <memory.h>
+# include <stdio.h>
+
+char	__dline[100];
+
+void	debug_init(void);
+double	clock_now_usec(void);
+void	print_time_usec(double usec);
+
+#endif

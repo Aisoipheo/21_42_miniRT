@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   rt_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/19 16:31:31 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/03/26 15:34:09 by rdrizzle         ###   ########.fr       */
+/*   Created: 2022/03/26 15:32:19 by rdrizzle          #+#    #+#             */
+/*   Updated: 2022/03/26 16:06:18 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx.h"
+#include <string.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <errno.h>
 #include "miniRT.h"
-#include "vec3.h"
-#include "benchmark.h"
+#include "utils.h"
 
-int	main(int argc, char *argv[])
+int	rt_error(const char *msg, char is_lib)
 {
-	t_info	info;
-	(void)argc;
-	(void)argv;
-	debug_init();
-	if (rt_init(&info))
-		return (rt_destroy(&info));
-	return (0);
+	write(STDERR_FILENO, msg, ft_strlen(msg));
+	if (is_lib)
+		perror(strerror(errno));
+	else
+		write(STDERR_FILENO, "\n", 1);
+	return (1);
 }

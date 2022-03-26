@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   object.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/19 16:31:31 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/03/26 15:34:09 by rdrizzle         ###   ########.fr       */
+/*   Created: 2022/03/26 14:43:20 by rdrizzle          #+#    #+#             */
+/*   Updated: 2022/03/26 14:45:55 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx.h"
-#include "miniRT.h"
-#include "vec3.h"
-#include "benchmark.h"
+#include "object.h"
 
-int	main(int argc, char *argv[])
+void	obj_copy(t_object *lhs, t_object *rhs)
 {
-	t_info	info;
-	(void)argc;
-	(void)argv;
-	debug_init();
-	if (rt_init(&info))
-		return (rt_destroy(&info));
-	return (0);
+	lhs->type = rhs->type;
+	vec_copy(&(lhs->p), &(rhs->p));
+	vec_copy(&(lhs->c), &(rhs->c));
+	vec_copy(&(lhs->r), &(rhs->r));
+	lhs->a = rhs->a;
 }

@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   rt_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/19 16:31:31 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/03/26 15:34:09 by rdrizzle         ###   ########.fr       */
+/*   Created: 2022/03/26 15:32:16 by rdrizzle          #+#    #+#             */
+/*   Updated: 2022/03/26 16:13:19 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx.h"
+#include <stdlib.h>
 #include "miniRT.h"
-#include "vec3.h"
-#include "benchmark.h"
 
-int	main(int argc, char *argv[])
+int	rt_init(t_info *info)
 {
-	t_info	info;
-	(void)argc;
-	(void)argv;
-	debug_init();
-	if (rt_init(&info))
-		return (rt_destroy(&info));
+	if (arr_init(&(info->objs), 0))
+		return (rt_error(RT_ERR_INIT, 1));
 	return (0);
+}
+
+int	rt_destroy(t_info *info)
+{
+	free(info->objs.arr);
+	return (1);
 }
