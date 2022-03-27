@@ -6,13 +6,13 @@
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 16:02:50 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/03/26 16:04:33 by rdrizzle         ###   ########.fr       */
+/*   Updated: 2022/03/26 16:28:18 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-int	ft_strlen(const char *s)
+inline int	ft_strlen(const char *s)
 {
 	int		i;
 

@@ -1,31 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   rt_hooks.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/19 16:31:31 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/03/27 17:04:52 by rdrizzle         ###   ########.fr       */
+/*   Created: 2022/03/26 18:23:21 by rdrizzle          #+#    #+#             */
+/*   Updated: 2022/03/27 16:48:47 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "mlx.h"
 #include "miniRT.h"
-#include "vec3.h"
-#include "benchmark.h"
 
-int	main(int argc, char *argv[])
+int	rt_exit_hook(t_info *info)
 {
-	t_info	info;
-	(void)argc;
-	(void)argv;
-	debug_init();
-	if (rt_init(&info))
-		return (rt_destroy(&info));
-	rt_prepare_image(&info);
-	mlx_put_image_to_window(info.mlx, info.window, info.screen, 0, 0);
-	mlx_loop(info.mlx);
-	return (EXIT_FAILURE);
+	rt_destroy(info);
+	exit(EXIT_SUCCESS);
+}
+
+int	rt_keypress_hook(int key, t_info *info)
+{
+	if (key == KEY_ESC)
+		rt_exit_hook(info);
+	return (0);
+}
+
+// int	rt_mouse_hook(int key, int x, int y, t_info *info);
+
+int	rt_loop_hook(t_info *info)
+{
+	(void)info;
+	return (0);
 }

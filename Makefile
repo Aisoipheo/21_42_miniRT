@@ -17,7 +17,9 @@ C_FILES				= main.c \
 						array.c \
 						object.c \
 						rt_error.c \
+						rt_hooks.c \
 						rt_init.c \
+						rt_prepare_image.c \
 
 BENCH_FILES			= benchmark.c \
 						benchmark_main.c \
