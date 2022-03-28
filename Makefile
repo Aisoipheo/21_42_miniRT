@@ -19,7 +19,7 @@ C_FILES				= main.c \
 						rt_error.c \
 						rt_hooks.c \
 						rt_init.c \
-						rt_prepare_image.c \
+						rt_render_image.c \
 
 BENCH_FILES			= benchmark.c \
 						benchmark_main.c \

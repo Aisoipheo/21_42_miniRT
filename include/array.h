@@ -6,7 +6,7 @@
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 14:03:46 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/03/26 14:55:09 by rdrizzle         ###   ########.fr       */
+/*   Updated: 2022/03/27 17:57:13 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "object.h"
 
-typedef unsigned int t_uint;
+typedef unsigned int	t_uint;
 
 typedef struct s_array
 {

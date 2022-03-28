@@ -6,7 +6,7 @@
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 16:50:44 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/03/27 17:19:23 by rdrizzle         ###   ########.fr       */
+/*   Updated: 2022/03/28 16:24:49 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,42 +53,49 @@
 // [END] Mouse
 
 # define RT_DEG2RAD 0.017453292519943295769236907684886127134428718885417254
+# define RT_RAY_DEN 16U
+# define RT_COLOR_SCALE 0.0625
+# define RT_W_SCALE 16.0
+# define RT_H_SCALE 9.0
+# define RT_WH_RATIO 1.77777777777777777777777777777777777777777777777777778
+# define RT_FOCAL 8.0
 
 # define RT_TITLE "miniRT"
 # define RT_ERR_INIT "miniRT initialization failed"
 
-typedef struct s_camera
+typedef struct s_ray
 {
 	t_vec3	pos;
 	t_vec3	dir;
-}	t_camera;
+}	t_ray;
+
+typedef t_ray	t_camera;
 
 typedef struct s_info
 {
 	t_array		objs;
 	t_camera	cam;
-	double		wh_ratio;
+	double		u;
+	double		v;
 	void		*mlx;
 	void		*window;
 	void		*screen;
 	char		*screen_addr;
 	int			w_window;
 	int			h_window;
-	int			w_scale;
-	int			h_scale;
 	int			bpp;
 	int			size_line;
 	int			endian;
 }	t_info;
 
-void	rt_prepare_image(t_info *info);
+void	rt_render_image(t_info *info);
 
-int	rt_error(const char *msg, char is_lib);
-int	rt_init(t_info *info);
-int	rt_destroy(t_info *info);
+int		rt_error(const char *msg, char is_lib);
+int		rt_init(t_info *info);
+int		rt_destroy(t_info *info);
 
-int	rt_exit_hook(t_info *info);
-int	rt_keypress_hook(int key, t_info *info);
+int		rt_exit_hook(t_info *info);
+int		rt_keypress_hook(int key, t_info *info);
 // int	rt_mouse_hook(int key, int x, int y, t_info *info);
-int	rt_loop_hook(t_info *info);
+int		rt_loop_hook(t_info *info);
 #endif

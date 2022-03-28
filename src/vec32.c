@@ -6,13 +6,13 @@
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 16:50:44 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/03/23 18:14:57 by rdrizzle         ###   ########.fr       */
+/*   Updated: 2022/03/27 17:56:47 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vec3.h"
 
-t_vec3	vec_norm(t_vec3 *self)
+inline t_vec3	vec_norm(t_vec3 *self)
 {
 	t_vec3	ret;
 	double	len;
@@ -24,7 +24,7 @@ t_vec3	vec_norm(t_vec3 *self)
 	return (ret);
 }
 
-double	vec_sin(t_vec3 *self, t_vec3 *other)
+inline double	vec_sin(t_vec3 *self, t_vec3 *other)
 {
 	double	cosine;
 
@@ -32,16 +32,17 @@ double	vec_sin(t_vec3 *self, t_vec3 *other)
 	return (sqrt(1 - cosine * cosine));
 }
 
-double	vec_cos(t_vec3 *self, t_vec3 *other)
+inline double	vec_cos(t_vec3 *self, t_vec3 *other)
 {
 	return (vec_dot(self, other) * 1. / (vec_len(self) * vec_len(other)));
 }
 
-double	vec_len(t_vec3 *self)
+inline double	vec_len(t_vec3 *self)
 {
 	return (sqrt(vec_len2(self)));
 }
-double	vec_len2(t_vec3 *self)
+
+inline double	vec_len2(t_vec3 *self)
 {
 	return (self->e[0] * self->e[0]
 		+ self->e[1] * self->e[1]

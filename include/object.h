@@ -6,7 +6,7 @@
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 14:04:44 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/03/26 15:03:38 by rdrizzle         ###   ########.fr       */
+/*   Updated: 2022/03/28 16:19:19 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # define OBJ_SPHERE 1
 # define OBJ_PLANE 2
 # define OBJ_CYLINDER 3
-
 
 // type
 // position

@@ -6,7 +6,7 @@
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 15:13:02 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/03/23 17:42:50 by rdrizzle         ###   ########.fr       */
+/*   Updated: 2022/03/28 17:15:23 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ typedef struct s_vec3
 	double	e[3];
 }	t_vec3;
 
-typedef	t_vec3	t_point3;
-typedef	t_vec3	t_color;
+typedef t_vec3	t_point3;
+typedef t_vec3	t_color;
 
+t_vec3		vec_from(double i, double j, double k);
 t_vec3		vec_zero(void);
 t_vec3		vec_neg(t_vec3 *self);
 t_vec3		*vec_add(t_vec3 *self, t_vec3 *other);
