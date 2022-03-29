@@ -6,7 +6,7 @@
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 15:32:16 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/03/29 18:06:13 by rdrizzle         ###   ########.fr       */
+/*   Updated: 2022/03/29 18:29:23 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,12 @@ static int	rt_prepare_scene(t_info *info)
 	info->cam.pos = vec_zero();
 	info->cam.dir.e[0] = 1;
 	info->cam.dir.e[1] = 0;
-	info->cam.dir.e[2] = 1;
-	info->focal = RT_HALF_W;
+	info->cam.dir.e[2] = 0;
+	info->fov = 90.0;
 
 	// setup objects (should be parsed)
+	// sphere
+	// arr_push(info->objs, sphere);
 
 	// find camera basis && normalize camera dir
 	info->b.v[0] = (t_vec3){-info->cam.dir.e[2], 0, info->cam.dir.e[0]};
@@ -73,10 +75,12 @@ static int	rt_prepare_scene(t_info *info)
 	info->b.v[1] = vec_norm(&(info->b.v[1]));
 	info->b.v[2] = vec_norm(&(info->b.v[2]));
 	info->cam.dir = vec_norm(&(info->cam.dir));
+	info->focal = fabs(tan(info->fov * RT_DEG2RAD * 0.5)) * RT_HALF_W;
 	printf("New cam basis:\n");
 	printf("   %f    %f    %f\n", info->b.v[0].e[0], info->b.v[1].e[0], info->b.v[2].e[0]);
 	printf("v0 %f v1 %f v2 %f\n", info->b.v[0].e[1], info->b.v[1].e[1], info->b.v[2].e[1]);
 	printf("   %f    %f    %f\n", info->b.v[0].e[2], info->b.v[1].e[2], info->b.v[2].e[2]);
+	printf("FOV: %f focal: %f\n", info->fov, info->focal);
 
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 14:04:44 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/03/29 16:02:01 by rdrizzle         ###   ########.fr       */
+/*   Updated: 2022/03/29 19:11:05 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,25 @@
 typedef struct s_object
 {
 	int				type;
-	t_vec3			p;
-	t_vec3			r;
-	t_color			c;
-	double			a;
+	t_vec3			p; // position
+	t_vec3			r; // rotation
+	t_color			c; // color
+	double			a; // light absorbtion
+	double			u[2]; // parameters
 }	t_object;
+
+// parameters for objects
+
+// PLANE
+// NO PARAMS
+
+// SPHERE
+// u[0] - radius
+
+// CYLINDER
+// u[0] - diameter
+// u[1] - height
+
 
 // void	obj_copy(t_object *lhs, t_object *rhs);
 

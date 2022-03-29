@@ -40,9 +40,10 @@ static inline void	get_color(t_info *info, t_color *c, double x, double y)
 	r.dir.e[1] = r.pos.e[1] - (info->cam.pos.e[1] - info->b.v[2].e[1] * info->focal);
 	r.dir.e[2] = r.pos.e[2] - (info->cam.pos.e[2] - info->b.v[2].e[2] * info->focal);
 	r.dir = vec_norm(&(r.dir));
-	c->e[0] = (255.999 * r.dir.e[0] + 256.0) / 2;
-	c->e[1] = (255.999 * r.dir.e[1] + 256.0) / 2;
-	c->e[2] = (255.999 * r.dir.e[2] + 256.0) / 2;
+	c->e[0] = fabs(255.999 * r.dir.e[0]);
+	c->e[1] = fabs(255.999 * r.dir.e[1]);
+	c->e[2] = fabs(255.999 * r.dir.e[2]);
+	*c = vec_zero();
 }
 
 void	rt_render_image(t_info *info)

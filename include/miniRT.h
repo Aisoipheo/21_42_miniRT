@@ -6,7 +6,7 @@
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 16:50:44 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/03/29 17:24:09 by rdrizzle         ###   ########.fr       */
+/*   Updated: 2022/03/29 18:09:13 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct s_info
 	t_basis3	b;
 	double		u;
 	double		v;
+	double		fov;
 	double		focal;
 	double		one_w_window;
 	double		one_h_window;
