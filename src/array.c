@@ -6,7 +6,7 @@
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 14:16:30 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/03/26 16:11:05 by rdrizzle         ###   ########.fr       */
+/*   Updated: 2022/03/29 16:03:17 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	arr_push(t_array *self, t_object *obj)
 {
 	if (self->last + 1 == self->capacity && arr_realloc(self))
 		return (1);
-	obj_copy(&(self->arr[(self->last)++]), obj);
+	self->arr[(self->last)++] = *obj;
 	return (0);
 }
 
@@ -51,7 +51,7 @@ int	arr_realloc(t_array *self)
 		return (1);
 	i = self->capacity;
 	while (i--)
-		obj_copy(tmp + i, self->arr + i);
+		tmp[i] = self->arr[i];
 	self->capacity <<= 1;
 	free(self->arr);
 	self->arr = tmp;

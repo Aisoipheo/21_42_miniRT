@@ -6,7 +6,7 @@
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 14:04:44 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/03/28 16:19:19 by rdrizzle         ###   ########.fr       */
+/*   Updated: 2022/03/29 16:02:01 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ typedef struct s_object
 	double			a;
 }	t_object;
 
-void	obj_copy(t_object *lhs, t_object *rhs);
+// void	obj_copy(t_object *lhs, t_object *rhs);
 
 #endif

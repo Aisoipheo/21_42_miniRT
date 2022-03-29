@@ -25,21 +25,24 @@ static inline void	pixel_put(t_info *info, t_color *color, int x, int y)
 		| (((int)color->e[2]));
 }
 
-static inline void	get_color(t_info *info, t_color *c, t_uint x, t_uint y)
+static inline void	get_color(t_info *info, t_color *c, double x, double y)
 {
 	t_ray	r;
+	double	x_0;
+	double	y_0;
 
-	r.pos.e[0] = info->cam.pos.e[0];
-	r.pos.e[1] = info->cam.pos.e[1];
-	r.pos.e[2] = info->cam.pos.e[2];
-	r.dir.e[0] = info->cam.dir.e[0];
-	r.dir.e[1] = info->cam.dir.e[1];
-	r.dir.e[2] = info->cam.dir.e[2];
-	c->e[0] = fabs(fmod((255.999 * (r.pos.e[0] + r.dir.e[0])), 256.0));
-	c->e[1] = fabs(fmod((255.999 * (r.pos.e[1] + r.dir.e[1])), 256.0));
-	c->e[2] = fabs(fmod((255.999 * (r.pos.e[2] + r.dir.e[2])), 256.0));
-	(void)x;
-	(void)y;
+	x_0 = (RT_W * x * info->one_w_window - RT_HALF_W);
+	y_0 = (RT_H * y * info->one_h_window - RT_HALF_H);
+	r.pos.e[0] = info->cam.pos.e[0] + info->b.v[0].e[0] * x_0 + info->b.v[1].e[0] * y_0;
+	r.pos.e[1] = info->cam.pos.e[1] + info->b.v[1].e[1] * y_0;
+	r.pos.e[2] = info->cam.pos.e[2] + info->b.v[0].e[2] * x_0 + info->b.v[1].e[2] * y_0;
+	r.dir.e[0] = r.pos.e[0] - (info->cam.pos.e[0] - info->b.v[2].e[0] * info->focal);
+	r.dir.e[1] = r.pos.e[1] - (info->cam.pos.e[1] - info->b.v[2].e[1] * info->focal);
+	r.dir.e[2] = r.pos.e[2] - (info->cam.pos.e[2] - info->b.v[2].e[2] * info->focal);
+	r.dir = vec_norm(&(r.dir));
+	c->e[0] = (255.999 * r.dir.e[0] + 256.0) / 2;
+	c->e[1] = (255.999 * r.dir.e[1] + 256.0) / 2;
+	c->e[2] = (255.999 * r.dir.e[2] + 256.0) / 2;
 }
 
 void	rt_render_image(t_info *info)
@@ -52,13 +55,7 @@ void	rt_render_image(t_info *info)
 	t_ull	start;
 	t_ull	end;
 
-	// should be defined in scene
-	info->cam.pos = vec_zero();
-	info->cam.dir = vec_zero();
-	info->cam.dir.e[2] = -1.0;
-
 	i = info->h_window;
-
 	printf("Rendering...\n");
 	start = clock_now_usec();
 	while (i--)

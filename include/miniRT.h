@@ -6,7 +6,7 @@
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 16:50:44 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/03/28 16:24:49 by rdrizzle         ###   ########.fr       */
+/*   Updated: 2022/03/29 17:24:09 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,11 @@
 # define RT_DEG2RAD 0.017453292519943295769236907684886127134428718885417254
 # define RT_RAY_DEN 16U
 # define RT_COLOR_SCALE 0.0625
-# define RT_W_SCALE 16.0
-# define RT_H_SCALE 9.0
+# define RT_W 16.0
+# define RT_HALF_W 8.0
+# define RT_H 9.0
+# define RT_HALF_H 4.5
 # define RT_WH_RATIO 1.77777777777777777777777777777777777777777777777777778
-# define RT_FOCAL 8.0
 
 # define RT_TITLE "miniRT"
 # define RT_ERR_INIT "miniRT initialization failed"
@@ -71,12 +72,21 @@ typedef struct s_ray
 
 typedef t_ray	t_camera;
 
+typedef struct s_basis3
+{
+	t_vec3	v[3];
+}	t_basis3;
+
 typedef struct s_info
 {
 	t_array		objs;
 	t_camera	cam;
+	t_basis3	b;
 	double		u;
 	double		v;
+	double		focal;
+	double		one_w_window;
+	double		one_h_window;
 	void		*mlx;
 	void		*window;
 	void		*screen;

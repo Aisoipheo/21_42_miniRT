@@ -6,7 +6,7 @@
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 17:15:36 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/03/28 17:16:21 by rdrizzle         ###   ########.fr       */
+/*   Updated: 2022/03/29 16:24:49 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,9 @@ inline t_vec3	*vec_cross(t_vec3 *self, t_vec3 *other)
 	return (self);
 }
 
-inline void	vec_copy(t_vec3 *self, t_vec3 *other)
-{
-	self->e[0] = other->e[0];
-	self->e[1] = other->e[1];
-	self->e[2] = other->e[2];
-}
-
-inline t_vec3	vec_from(double i, double j, double k)
-{
-	t_vec3	v;
-
-	v.e[0] = i;
-	v.e[1] = j;
-	v.e[2] = k;
-	return (v);
-}
+// inline void	vec_copy(t_vec3 *self, t_vec3 *other)
+// {
+// 	self->e[0] = other->e[0];
+// 	self->e[1] = other->e[1];
+// 	self->e[2] = other->e[2];
+// }
