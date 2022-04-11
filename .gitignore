@@ -2,6 +2,7 @@ obj
 miniRT
 benchmark
 *.txt
+.vscode
 
 # Prerequisites
 *.d

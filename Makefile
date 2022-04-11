@@ -5,7 +5,7 @@ HDRS_DIR			= ./include
 SRCS_DIR			= ./src
 OBJS_DIR			= ./obj
 
-MLX_DIR				= ./minilibx_opengl
+MLX_DIR				= minilibx_opengl
 MLX					= $(addprefix $(MLX_DIR)/, libmlx.a)
 
 C_FILES				= main.c \
@@ -15,11 +15,12 @@ C_FILES				= main.c \
 						vec33.c \
 						utils.c \
 						array.c \
-						object.c \
 						rt_error.c \
 						rt_hooks.c \
 						rt_init.c \
 						rt_render_image.c \
+						rt_hit.c \
+						rt_raytrace.c \
 
 BENCH_FILES			= benchmark.c \
 						benchmark_main.c \
@@ -32,8 +33,8 @@ DEPENDENCIES		= $(OBJS:.o=.d)
 BENCH_DEPENDENCIES	= $(BENCH_OBJS:.o=.d)
 
 CC					= gcc
-CFLAGS				= -O3 -ffast-math -Wall -Werror -Wextra -I $(HDRS_DIR) -I $(MLX_DIR)
-LFLAGS				= $(CFLAGS) -lmlx -framework OpenGL -framework AppKit
+CFLAGS				= -g -O3 -ffast-math -Wall -Werror -Wextra -I $(HDRS_DIR) -I $(MLX_DIR)
+LFLAGS				= $(CFLAGS) -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 
 AR					= ar
 ARFLAGS				= rcs

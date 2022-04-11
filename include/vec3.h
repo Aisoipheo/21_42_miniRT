@@ -6,13 +6,15 @@
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 15:13:02 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/03/29 16:53:54 by rdrizzle         ###   ########.fr       */
+/*   Updated: 2022/04/02 14:52:55 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VEC3_H
 # define VEC3_H
 
+// for later hehe...
+// # include <immintrin.h>
 # include <math.h>
 
 typedef struct s_vec3
@@ -23,7 +25,6 @@ typedef struct s_vec3
 typedef t_vec3	t_point3;
 typedef t_vec3	t_color;
 
-t_vec3		vec_zero(void);
 t_vec3		vec_neg(t_vec3 *self);
 t_vec3		*vec_add(t_vec3 *self, t_vec3 *other);
 t_vec3		*vec_sub(t_vec3 *self, t_vec3 *other);

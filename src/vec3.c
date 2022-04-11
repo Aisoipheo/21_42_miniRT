@@ -6,21 +6,11 @@
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 15:34:25 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/03/27 17:48:52 by rdrizzle         ###   ########.fr       */
+/*   Updated: 2022/04/02 14:53:08 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vec3.h"
-
-inline t_vec3	vec_zero(void)
-{
-	t_vec3	self;
-
-	self.e[0] = 0;
-	self.e[1] = 0;
-	self.e[2] = 0;
-	return (self);
-}
 
 inline t_vec3	vec_neg(t_vec3 *self)
 {

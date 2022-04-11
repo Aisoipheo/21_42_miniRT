@@ -6,7 +6,7 @@
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 16:31:31 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/03/29 14:26:03 by rdrizzle         ###   ########.fr       */
+/*   Updated: 2022/04/11 16:33:30 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int argc, char *argv[])
 	if (rt_init(&info))
 		return (rt_destroy(&info));
 	rt_render_image(&info);
-	mlx_put_image_to_window(info.mlx, info.window, info.screen, 0, 0);
+	mlx_put_image_to_window(info.mlx, info.window, info.screen.img, 0, 0);
 	mlx_loop(info.mlx);
 	return (EXIT_FAILURE);
 }

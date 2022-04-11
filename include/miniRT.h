@@ -6,7 +6,7 @@
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 16:50:44 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/03/29 18:09:13 by rdrizzle         ###   ########.fr       */
+/*   Updated: 2022/04/09 16:26:10 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define MINIRT_H
 
 # include "array.h"
-# include "mlx.h"
 # include "mlx.h"
 
 // [BEGIN] X11/X.h
@@ -55,18 +54,22 @@
 # define RT_DEG2RAD 0.017453292519943295769236907684886127134428718885417254
 # define RT_RAY_DEN 16U
 # define RT_COLOR_SCALE 0.0625
-# define RT_W 16.0
-# define RT_HALF_W 8.0
-# define RT_H 9.0
-# define RT_HALF_H 4.5
-# define RT_WH_RATIO 1.77777777777777777777777777777777777777777777777777778
+# define RT_ASPECT_RATIO 1.77777777777777777777777777777777777777777777777777778
+# define RT_EPS 1e-8
+# define RT_MAX_BOUNCE 32U
 
 # define RT_TITLE "miniRT"
 # define RT_ERR_INIT "miniRT initialization failed"
 
+typedef struct s_hit
+{
+	t_vec3	p; // point of intersection
+	double	d; // distance from ray origin to point of intersection
+}	t_hit;
+
 typedef struct s_ray
 {
-	t_vec3	pos;
+	t_vec3	orig;
 	t_vec3	dir;
 }	t_ray;
 
@@ -77,29 +80,55 @@ typedef struct s_basis3
 	t_vec3	v[3];
 }	t_basis3;
 
+typedef struct s_mlx_img
+{
+	void	*img;
+	char	*addr;
+	int		w;
+	int		h;
+	int		bpp;
+	int		size_line;
+	int		endian;
+}	t_mlx_img;
+
 typedef struct s_info
 {
 	t_array		objs;
 	t_camera	cam;
 	t_basis3	b;
-	double		u;
-	double		v;
+	t_vec3		rbc;
+	double		theta;
+	double		cost0;
+	double		sint0;
+	double		cost;
+	double		sint;
+	double		gamma;
+	double		cosg;
+	double		sing;
+	double		cosg0;
+	double		sing0;
+	double		w_view;
+	double		h_view;
+	double		w_view_2;
+	double		h_view_2;
 	double		fov;
 	double		focal;
 	double		one_w_window;
 	double		one_h_window;
+	double		one_w_windowm1;
+	double		one_h_windowm1;
 	void		*mlx;
 	void		*window;
-	void		*screen;
-	char		*screen_addr;
+	t_uint		hits[RT_MAX_BOUNCE];
+	t_mlx_img	screen;
+	t_mlx_img	sky;
 	int			w_window;
 	int			h_window;
-	int			bpp;
-	int			size_line;
-	int			endian;
 }	t_info;
 
 void	rt_render_image(t_info *info);
+void	rt_sky_color(t_info *info, t_ray *r, t_color *c);
+void	rt_raytrace(t_info *info, t_ray *r, t_color *c);
 
 int		rt_error(const char *msg, char is_lib);
 int		rt_init(t_info *info);
@@ -107,6 +136,12 @@ int		rt_destroy(t_info *info);
 
 int		rt_exit_hook(t_info *info);
 int		rt_keypress_hook(int key, t_info *info);
-// int	rt_mouse_hook(int key, int x, int y, t_info *info);
+int		rt_mouse_hook(int key, int x, int y, t_info *info);
 int		rt_loop_hook(t_info *info);
+
+// double		rt_solve();
+double		rt_hit_plane(t_object *self, t_ray *r);
+double		rt_hit_sphere(t_object *self, t_ray *r);
+double		rt_hit_cylinder(t_object *self, t_ray *r);
+
 #endif
