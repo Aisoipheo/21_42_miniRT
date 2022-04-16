@@ -6,14 +6,14 @@
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 14:04:00 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/04/09 16:52:12 by rdrizzle         ###   ########.fr       */
+/*   Updated: 2022/04/16 17:19:34 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
 // -1 or dist to hit point from ray origin
-static double	rt_solve(double *pc)
+inline double	rt_solve(double *pc)
 {
 	double	res[4];
 
@@ -52,21 +52,6 @@ double	rt_hit_sphere(t_object *self, t_ray *r)
 	return rt_solve(pc);
 }
 
-//?
-double	rt_hit_cylinder(t_object *self, t_ray *r)
-{
-	double	pc[3];
-	t_vec3	res;
-
-	res = r->orig;
-	vec_sub(&res, &self->p);
-	pc[0] = vec_dot(&r->dir, &self->r);
-	pc[1] = vec_dot(&res, &self->r);
-	pc[2] = 2.0 * (vec_dot(&r->dir, &res) - pc[0] * pc[1]);
-	pc[0] = vec_dot(&r->dir, &r->dir) - pc[0] * pc[0];
-	pc[2] = vec_dot(&res, &res) - pc[1] * pc[2] - self->u[0] * self->u[0];
-	return rt_solve(pc);
-}
 
 double	rt_hit_plane(t_object *self, t_ray *r)
 {

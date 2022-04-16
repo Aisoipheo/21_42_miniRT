@@ -20,6 +20,7 @@ C_FILES				= main.c \
 						rt_init.c \
 						rt_render_image.c \
 						rt_hit.c \
+						rt_hit2.c \
 						rt_raytrace.c \
 
 BENCH_FILES			= benchmark.c \

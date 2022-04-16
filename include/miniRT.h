@@ -6,7 +6,7 @@
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 16:50:44 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/04/09 16:26:10 by rdrizzle         ###   ########.fr       */
+/*   Updated: 2022/04/16 17:19:26 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,9 @@ int		rt_keypress_hook(int key, t_info *info);
 int		rt_mouse_hook(int key, int x, int y, t_info *info);
 int		rt_loop_hook(t_info *info);
 
-// double		rt_solve();
+double		rt_solve(double *pc);
+double		_rt_hit_cylinder(t_object *self, t_ray *r);
+double		_rt_hit_cylinder_cap(t_object *self, t_ray *r);
 double		rt_hit_plane(t_object *self, t_ray *r);
 double		rt_hit_sphere(t_object *self, t_ray *r);
 double		rt_hit_cylinder(t_object *self, t_ray *r);
