@@ -61,22 +61,10 @@ double	_rt_hit_cylinder(t_object *self, t_ray *r)
 
 double	rt_hit_cylinder(t_object *self, t_ray *r)
 {
-	double	dcap;
 	double	dside;
 
 	dside = _rt_hit_cylinder(self, r);
-	dcap = _rt_hit_cylinder_cap(self, r);
-	if (dside != -1 && dcap != -1)
-	{
-		if (dside < dcap)
-			return (dside);
-		return (dcap);
-	}
-	if (dside != -1 || dside != -1)
-	{
-		if (dside < dcap)
-			return (dcap);
+	if (dside != -1)
 		return (dside);
-	}
-	return (-1);
+	return (_rt_hit_cylinder_cap(self, r));
 }
