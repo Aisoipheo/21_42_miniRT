@@ -15,4 +15,5 @@ rdrizzle (@Aisoipheo)
 not all of them obv 🙄
 
 * Ambient lighing
+
 ![Ambient Formula](https://ogldev.org/www/tutorial17/ambient_light.png)
