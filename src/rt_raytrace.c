@@ -6,7 +6,7 @@
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 16:28:43 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/04/11 16:32:59 by rdrizzle         ###   ########.fr       */
+/*   Updated: 2022/04/18 16:06:34 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ inline double	closest_object(t_info *info, t_ray *r, t_uint hitno)
 inline void	rt_raytrace(t_info *info, t_ray *r, t_color *c)
 {
 	t_uint	hits;
+	// t_ray	ref;
 	double	d;
 
 	hits = 0;
@@ -52,10 +53,11 @@ inline void	rt_raytrace(t_info *info, t_ray *r, t_color *c)
 	{
 		d = closest_object(info, r, hits);
 		if (d == -1)
+		{
 			rt_sky_color(info, r, c);
-		else
-			*c = info->objs.arr[info->hits[hits]].c;
-		break;
+			return ;
+		}
+		*c = info->objs.arr[info->hits[hits]].c;
 		++hits;
 	}
 }

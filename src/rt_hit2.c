@@ -6,7 +6,7 @@
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 17:04:44 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/04/16 18:57:44 by rdrizzle         ###   ########.fr       */
+/*   Updated: 2022/04/18 13:26:39 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,58 @@
 
 double	_rt_hit_cylinder_cap(t_object *self, t_ray *r)
 {
-	(void)(self); (void)(r);
+	t_vec3		pp;
+	t_vec3		rv;
+	double		d[4];
+
+	pp = self->p;
+	self->p.e[0] = self->p.e[0] - self->u[1] * self->r.e[0];
+	self->p.e[1] = self->p.e[1] - self->u[1] * self->r.e[1];
+	self->p.e[2] = self->p.e[2] - self->u[1] * self->r.e[2];
+	d[0] = rt_hit_plane(self, r);
+	if (d[0] != -1)
+	{
+		rv.e[0] = r->orig.e[0] + r->dir.e[0] * d[0] - self->p.e[0];
+		rv.e[1] = r->orig.e[1] + r->dir.e[1] * d[0] - self->p.e[1];
+		rv.e[2] = r->orig.e[2] + r->dir.e[2] * d[0] - self->p.e[2];
+		d[2] = sqrt(vec_dot(&rv, &rv));
+	}
+	self->p.e[0] = pp.e[0] + self->u[1] * self->r.e[0];
+	self->p.e[1] = pp.e[1] + self->u[1] * self->r.e[1];
+	self->p.e[2] = pp.e[2] + self->u[1] * self->r.e[2];
+	d[1] = rt_hit_plane(self, r);
+	if (d[1] != -1)
+	{
+		rv.e[0] = r->orig.e[0] + r->dir.e[0] * d[1] - self->p.e[0];
+		rv.e[1] = r->orig.e[1] + r->dir.e[1] * d[1] - self->p.e[1];
+		rv.e[2] = r->orig.e[2] + r->dir.e[2] * d[1] - self->p.e[2];
+		d[3] = sqrt(vec_dot(&rv, &rv));
+	}
+	self->p = pp;
+	if (d[1] != -1 && d[0] != -1)
+	{
+		if (d[2] < d[3])
+		{
+			if (d[2] <= self->u[0])
+				return (d[0]);
+			return (-1);
+		}
+		if (d[3] <= self->u[0])
+			return (d[1]);
+		return (-1);
+	}
+	if (d[1] != -1 || d[0] != -1)
+	{
+		if (d[0] < d[1])
+		{
+			if (d[3] <= self->u[0])
+				return (d[1]);
+			return (-1);
+		}
+		if (d[2] <= self->u[0])
+			return (d[0]);
+		return (-1);
+	}
 	return (-1);
 }
 

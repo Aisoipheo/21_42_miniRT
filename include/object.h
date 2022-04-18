@@ -6,7 +6,7 @@
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 14:04:44 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/04/05 16:22:39 by rdrizzle         ###   ########.fr       */
+/*   Updated: 2022/04/18 15:56:52 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,25 @@ typedef struct s_object
 	t_vec3				p; // position
 	t_vec3				r; // rotation
 	t_color				c; // color
-	double				a; // light absorbtion
+	double				lp[2]; // light properties
 	double				u[2]; // parameters
 	t_object_hit_ptr	func;
 	int					type;
 }	t_object;
 
+
+typedef struct s_light
+{
+	t_point3	p;
+	t_color		c;
+	double		b;
+}	t_light;
+
 // parameters for objects
+
+// all objects
+// lp[0] - light absorbation [0; 1]
+// lp[1] - shininess [0; 1];
 
 // PLANE
 // NO PARAMS

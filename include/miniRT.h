@@ -6,7 +6,7 @@
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 16:50:44 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/04/16 17:19:26 by rdrizzle         ###   ########.fr       */
+/*   Updated: 2022/04/18 15:07:03 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,37 +93,39 @@ typedef struct s_mlx_img
 
 typedef struct s_info
 {
-	t_array		objs;
-	t_camera	cam;
-	t_basis3	b;
-	t_vec3		rbc;
-	double		theta;
-	double		cost0;
-	double		sint0;
-	double		cost;
-	double		sint;
-	double		gamma;
-	double		cosg;
-	double		sing;
-	double		cosg0;
-	double		sing0;
-	double		w_view;
-	double		h_view;
-	double		w_view_2;
-	double		h_view_2;
-	double		fov;
-	double		focal;
-	double		one_w_window;
-	double		one_h_window;
-	double		one_w_windowm1;
-	double		one_h_windowm1;
-	void		*mlx;
-	void		*window;
-	t_uint		hits[RT_MAX_BOUNCE];
-	t_mlx_img	screen;
-	t_mlx_img	sky;
-	int			w_window;
-	int			h_window;
+	t_obj_array		objs;
+	t_l_array		lights;
+	t_camera		cam;
+	t_basis3		b;
+	t_color			amb_color;
+	double			amb_intencity;
+	double			theta;
+	double			cost0;
+	double			sint0;
+	double			cost;
+	double			sint;
+	double			gamma;
+	double			cosg;
+	double			sing;
+	double			cosg0;
+	double			sing0;
+	double			w_view;
+	double			h_view;
+	double			w_view_2;
+	double			h_view_2;
+	double			fov;
+	double			focal;
+	double			one_w_window;
+	double			one_h_window;
+	double			one_w_windowm1;
+	double			one_h_windowm1;
+	void			*mlx;
+	void			*window;
+	t_uint			hits[RT_MAX_BOUNCE];
+	t_mlx_img		screen;
+	t_mlx_img		sky;
+	int				w_window;
+	int				h_window;
 }	t_info;
 
 void	rt_render_image(t_info *info);

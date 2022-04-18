@@ -154,9 +154,8 @@ void	rt_render_image(t_info *info)
 		z_1 = w * info->sing + r.dir.e[1] * info->cosg;
 		w = x_1;
 		r.dir.e[1] = z_1;
-		// printf("\n");
-		// printf("\r%f", (1.0 - (double)i / info->h_window) * 100.0);
-		// fflush(stdout);
+		printf("\r%f", (1.0 - (double)i / info->h_window) * 100.0);
+		fflush(stdout);
 	}
 	end = clock_now_usec();
 	printf("\nReady!\n");

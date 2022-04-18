@@ -15,6 +15,7 @@ C_FILES				= main.c \
 						vec33.c \
 						utils.c \
 						array.c \
+						array2.c \
 						rt_error.c \
 						rt_hooks.c \
 						rt_init.c \

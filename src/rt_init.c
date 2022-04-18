@@ -6,7 +6,7 @@
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 15:32:16 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/04/16 18:58:30 by rdrizzle         ###   ########.fr       */
+/*   Updated: 2022/04/18 16:04:37 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +50,22 @@ static int	rt_prepare_scene(t_info *info)
 
 	// setup camera (should be parsed)
 	info->cam.orig = (t_vec3) {5, 2, 5};
-	info->cam.dir = (t_vec3) {-1, 0, -1};
+	info->cam.dir = (t_vec3) {-1, -0.3, -1};
 	info->fov = 180;
+
+	info->amb_color = (t_color) {255, 0, 0};
+	info->amb_intencity = 1.0;
 
 	// setup objects (should be parsed)
 	t_object	obj;
+	t_light		light;
 
 	// //plane
 	// obj.type = OBJ_PLANE;
 	// obj.p = (t_vec3) {1000, 0, 0};
 	// obj.r = (t_vec3) {1, 0, 0};
 	// obj.c = (t_vec3) {0, 255, 255};
-	// obj.a = 0;
+	// obj.lp[0] = 0;
 	// obj.u[0] = 1;
 	// obj.u[1] = 0;
 	// obj.func = &rt_hit_plane;
@@ -72,275 +76,287 @@ static int	rt_prepare_scene(t_info *info)
 	// obj.p = (t_vec3) {0, 10, 0};
 	// obj.r = (t_vec3) {1, 1, 0};
 	// obj.c = (t_vec3) {128, 255, 255};
-	// obj.a = 0;
+	// obj.lp[0] = 0;
 	// obj.u[0] = 5;
 	// obj.u[1] = 10;
 	// obj.func = &rt_hit_cylinder;
 	// arr_push(&(info->objs), &obj);
 
 	//sphere
-// 	obj.type = OBJ_SPHERE;
-// 	obj.p = (t_vec3) {5, 0, 0};
-// 	obj.r = (t_vec3) {1, 0, 0};
-// 	obj.c = (t_vec3) {255, 0, 0};
-// 	obj.a = 0;
-// 	obj.u[0] = 1;
-// 	obj.u[1] = 0;
-// 	obj.func = &rt_hit_sphere;
-// 	arr_push(&(info->objs), &obj);
+	obj.type = OBJ_SPHERE;
+	obj.p = (t_vec3) {5, 0, 0};
+	obj.r = (t_vec3) {1, 0, 0};
+	obj.c = (t_vec3) {255, 0, 0};
+	obj.lp[0] = 0;
+	obj.u[0] = 1;
+	obj.u[1] = 0;
+	obj.func = &rt_hit_sphere;
+	obj_arr_push(&(info->objs), &obj);
 
 
-// 	//sphere
-// 	obj.type = OBJ_SPHERE;
-// 	obj.p = (t_vec3) {-5, 0, 5};
-// 	obj.r = (t_vec3) {1, 0, 0};
-// 	obj.c = (t_vec3) {255, 0, 255};
-// 	obj.a = 0;
-// 	obj.u[0] = 1;
-// 	obj.u[1] = 0;
-// 	obj.func = &rt_hit_sphere;
-// 	arr_push(&(info->objs), &obj);
+	//sphere
+	obj.type = OBJ_SPHERE;
+	obj.p = (t_vec3) {-5, 0, 5};
+	obj.r = (t_vec3) {1, 0, 0};
+	obj.c = (t_vec3) {255, 0, 255};
+	obj.lp[0] = 0;
+	obj.u[0] = 1;
+	obj.u[1] = 0;
+	obj.func = &rt_hit_sphere;
+	obj_arr_push(&(info->objs), &obj);
 
-// 	//sphere
-// 	obj.type = OBJ_SPHERE;
-// 	obj.p = (t_vec3) {5, 0, -5};
-// 	obj.r = (t_vec3) {1, 0, 0};
-// 	obj.c = (t_vec3) {255, 255, 0};
-// 	obj.a = 0;
-// 	obj.u[0] = 1;
-// 	obj.u[1] = 0;
-// 	obj.func = &rt_hit_sphere;
-// 	arr_push(&(info->objs), &obj);
+	//sphere
+	obj.type = OBJ_SPHERE;
+	obj.p = (t_vec3) {5, 0, -5};
+	obj.r = (t_vec3) {1, 0, 0};
+	obj.c = (t_vec3) {255, 255, 0};
+	obj.lp[0] = 0;
+	obj.u[0] = 1;
+	obj.u[1] = 0;
+	obj.func = &rt_hit_sphere;
+	obj_arr_push(&(info->objs), &obj);
 
-// 	//sphere
-// 	obj.type = OBJ_SPHERE;
-// 	obj.p = (t_vec3) {0, 0, 5};
-// 	obj.r = (t_vec3) {0, 0, 1};
-// 	obj.c = (t_vec3) {0, 255, 0};
-// 	obj.a = 0;
-// 	obj.u[0] = 1;
-// 	obj.u[1] = 0;
-// 	obj.func = &rt_hit_sphere;
-// 	arr_push(&(info->objs), &obj);
+	//sphere
+	obj.type = OBJ_SPHERE;
+	obj.p = (t_vec3) {0, 0, 5};
+	obj.r = (t_vec3) {0, 0, 1};
+	obj.c = (t_vec3) {0, 255, 0};
+	obj.lp[0] = 0;
+	obj.u[0] = 1;
+	obj.u[1] = 0;
+	obj.func = &rt_hit_sphere;
+	obj_arr_push(&(info->objs), &obj);
 
-// /* GRAY COL */
+/* GRAY COL */
 
-// 	//sphere
-// 	obj.type = OBJ_SPHERE;
-// 	obj.p = (t_vec3) {0, 0, 0};
-// 	obj.r = (t_vec3) {0, 0, 0};
-// 	obj.c = (t_vec3) {0, 0, 0};
-// 	obj.a = 0;
-// 	obj.u[0] = 1;
-// 	obj.u[1] = 0;
-// 	obj.func = &rt_hit_sphere;
-// 	arr_push(&(info->objs), &obj);
+	//sphere
+	obj.type = OBJ_SPHERE;
+	obj.p = (t_vec3) {0, 0, 0};
+	obj.r = (t_vec3) {0, 0, 0};
+	obj.c = (t_vec3) {0, 0, 0};
+	obj.lp[0] = 0;
+	obj.u[0] = 1;
+	obj.u[1] = 0;
+	obj.func = &rt_hit_sphere;
+	obj_arr_push(&(info->objs), &obj);
 
-// 	//sphere
-// 	obj.type = OBJ_SPHERE;
-// 	obj.p = (t_vec3) {0, -1, 0};
-// 	obj.r = (t_vec3) {0, 0, 0};
-// 	obj.c = (t_vec3) {51, 51, 51};
-// 	obj.a = 0;
-// 	obj.u[0] = 1;
-// 	obj.u[1] = 0;
-// 	obj.func = &rt_hit_sphere;
-// 	arr_push(&(info->objs), &obj);
+	//sphere
+	obj.type = OBJ_SPHERE;
+	obj.p = (t_vec3) {0, -1, 0};
+	obj.r = (t_vec3) {0, 0, 0};
+	obj.c = (t_vec3) {51, 51, 51};
+	obj.lp[0] = 0;
+	obj.u[0] = 1;
+	obj.u[1] = 0;
+	obj.func = &rt_hit_sphere;
+	obj_arr_push(&(info->objs), &obj);
 
-// 	//sphere
-// 	obj.type = OBJ_SPHERE;
-// 	obj.p = (t_vec3) {0, -2, 0};
-// 	obj.r = (t_vec3) {0, 0, 0};
-// 	obj.c = (t_vec3) {102, 102, 102};
-// 	obj.a = 0;
-// 	obj.u[0] = 1;
-// 	obj.u[1] = 0;
-// 	obj.func = &rt_hit_sphere;
-// 	arr_push(&(info->objs), &obj);
+	//sphere
+	obj.type = OBJ_SPHERE;
+	obj.p = (t_vec3) {0, -2, 0};
+	obj.r = (t_vec3) {0, 0, 0};
+	obj.c = (t_vec3) {102, 102, 102};
+	obj.lp[0] = 0;
+	obj.u[0] = 1;
+	obj.u[1] = 0;
+	obj.func = &rt_hit_sphere;
+	obj_arr_push(&(info->objs), &obj);
 
-// 	//sphere
-// 	obj.type = OBJ_SPHERE;
-// 	obj.p = (t_vec3) {0, -3, 0};
-// 	obj.r = (t_vec3) {0, 0, 0};
-// 	obj.c = (t_vec3) {153, 153, 153};
-// 	obj.a = 0;
-// 	obj.u[0] = 1;
-// 	obj.u[1] = 0;
-// 	obj.func = &rt_hit_sphere;
-// 	arr_push(&(info->objs), &obj);
+	//sphere
+	obj.type = OBJ_SPHERE;
+	obj.p = (t_vec3) {0, -3, 0};
+	obj.r = (t_vec3) {0, 0, 0};
+	obj.c = (t_vec3) {153, 153, 153};
+	obj.lp[0] = 0;
+	obj.u[0] = 1;
+	obj.u[1] = 0;
+	obj.func = &rt_hit_sphere;
+	obj_arr_push(&(info->objs), &obj);
 
-// 	//sphere
-// 	obj.type = OBJ_SPHERE;
-// 	obj.p = (t_vec3) {0, -4, 0};
-// 	obj.r = (t_vec3) {0, 0, 0};
-// 	obj.c = (t_vec3) {204, 204, 204};
-// 	obj.a = 0;
-// 	obj.u[0] = 1;
-// 	obj.u[1] = 0;
-// 	obj.func = &rt_hit_sphere;
-// 	arr_push(&(info->objs), &obj);
+	//sphere
+	obj.type = OBJ_SPHERE;
+	obj.p = (t_vec3) {0, -4, 0};
+	obj.r = (t_vec3) {0, 0, 0};
+	obj.c = (t_vec3) {204, 204, 204};
+	obj.lp[0] = 0;
+	obj.u[0] = 1;
+	obj.u[1] = 0;
+	obj.func = &rt_hit_sphere;
+	obj_arr_push(&(info->objs), &obj);
 
-// 	//sphere
-// 	obj.type = OBJ_SPHERE;
-// 	obj.p = (t_vec3) {0, -5, 0};
-// 	obj.r = (t_vec3) {0, 1, 0};
-// 	obj.c = (t_vec3) {255, 255, 255};
-// 	obj.a = 0;
-// 	obj.u[0] = 1;
-// 	obj.u[1] = 0;
-// 	obj.func = &rt_hit_sphere;
-// 	arr_push(&(info->objs), &obj);
+	//sphere
+	obj.type = OBJ_SPHERE;
+	obj.p = (t_vec3) {0, -5, 0};
+	obj.r = (t_vec3) {0, 1, 0};
+	obj.c = (t_vec3) {255, 255, 255};
+	obj.lp[0] = 0;
+	obj.u[0] = 1;
+	obj.u[1] = 0;
+	obj.func = &rt_hit_sphere;
+	obj_arr_push(&(info->objs), &obj);
 
-// /* END OF GRAY COL */
-// /* RED COL */
+/* END OF GRAY COL */
+/* RED COL */
 
-// 	//sphere
-// 	obj.type = OBJ_SPHERE;
-// 	obj.p = (t_vec3) {2.5, 0, 0};
-// 	obj.r = (t_vec3) {0, 0, 0};
-// 	obj.c = (t_vec3) {0, 0, 0};
-// 	obj.a = 0;
-// 	obj.u[0] = 1;
-// 	obj.u[1] = 0;
-// 	obj.func = &rt_hit_sphere;
-// 	arr_push(&(info->objs), &obj);
+	//sphere
+	obj.type = OBJ_SPHERE;
+	obj.p = (t_vec3) {2.5, 0, 0};
+	obj.r = (t_vec3) {0, 0, 0};
+	obj.c = (t_vec3) {0, 0, 0};
+	obj.lp[0] = 0;
+	obj.u[0] = 1;
+	obj.u[1] = 0;
+	obj.func = &rt_hit_sphere;
+	obj_arr_push(&(info->objs), &obj);
 
-// 	//sphere
-// 	obj.type = OBJ_SPHERE;
-// 	obj.p = (t_vec3) {2.5, -1, 0};
-// 	obj.r = (t_vec3) {0, 0, 0};
-// 	obj.c = (t_vec3) {51, 0, 0};
-// 	obj.a = 0;
-// 	obj.u[0] = 1;
-// 	obj.u[1] = 0;
-// 	obj.func = &rt_hit_sphere;
-// 	arr_push(&(info->objs), &obj);
+	//sphere
+	obj.type = OBJ_SPHERE;
+	obj.p = (t_vec3) {2.5, -1, 0};
+	obj.r = (t_vec3) {0, 0, 0};
+	obj.c = (t_vec3) {51, 0, 0};
+	obj.lp[0] = 0;
+	obj.u[0] = 1;
+	obj.u[1] = 0;
+	obj.func = &rt_hit_sphere;
+	obj_arr_push(&(info->objs), &obj);
 
-// 	//sphere
-// 	obj.type = OBJ_SPHERE;
-// 	obj.p = (t_vec3) {2.5, -2, 0};
-// 	obj.r = (t_vec3) {0, 0, 0};
-// 	obj.c = (t_vec3) {102, 0, 0};
-// 	obj.a = 0;
-// 	obj.u[0] = 1;
-// 	obj.u[1] = 0;
-// 	obj.func = &rt_hit_sphere;
-// 	arr_push(&(info->objs), &obj);
+	//sphere
+	obj.type = OBJ_SPHERE;
+	obj.p = (t_vec3) {2.5, -2, 0};
+	obj.r = (t_vec3) {0, 0, 0};
+	obj.c = (t_vec3) {102, 0, 0};
+	obj.lp[0] = 0;
+	obj.u[0] = 1;
+	obj.u[1] = 0;
+	obj.func = &rt_hit_sphere;
+	obj_arr_push(&(info->objs), &obj);
 
-// 	//sphere
-// 	obj.type = OBJ_SPHERE;
-// 	obj.p = (t_vec3) {2.5, -3, 0};
-// 	obj.r = (t_vec3) {0, 0, 0};
-// 	obj.c = (t_vec3) {153, 0, 0};
-// 	obj.a = 0;
-// 	obj.u[0] = 1;
-// 	obj.u[1] = 0;
-// 	obj.func = &rt_hit_sphere;
-// 	arr_push(&(info->objs), &obj);
+	//sphere
+	obj.type = OBJ_SPHERE;
+	obj.p = (t_vec3) {2.5, -3, 0};
+	obj.r = (t_vec3) {0, 0, 0};
+	obj.c = (t_vec3) {153, 0, 0};
+	obj.lp[0] = 0;
+	obj.u[0] = 1;
+	obj.u[1] = 0;
+	obj.func = &rt_hit_sphere;
+	obj_arr_push(&(info->objs), &obj);
 
-// 	//sphere
-// 	obj.type = OBJ_SPHERE;
-// 	obj.p = (t_vec3) {2.5, -4, 0};
-// 	obj.r = (t_vec3) {0, 0, 0};
-// 	obj.c = (t_vec3) {204, 0, 0};
-// 	obj.a = 0;
-// 	obj.u[0] = 1;
-// 	obj.u[1] = 0;
-// 	obj.func = &rt_hit_sphere;
-// 	arr_push(&(info->objs), &obj);
+	//sphere
+	obj.type = OBJ_SPHERE;
+	obj.p = (t_vec3) {2.5, -4, 0};
+	obj.r = (t_vec3) {0, 0, 0};
+	obj.c = (t_vec3) {204, 0, 0};
+	obj.lp[0] = 0;
+	obj.u[0] = 1;
+	obj.u[1] = 0;
+	obj.func = &rt_hit_sphere;
+	obj_arr_push(&(info->objs), &obj);
 
-// 	//sphere
-// 	obj.type = OBJ_SPHERE;
-// 	obj.p = (t_vec3) {2.5, -5, 0};
-// 	obj.r = (t_vec3) {0, 1, 0};
-// 	obj.c = (t_vec3) {255, 0, 0};
-// 	obj.a = 0;
-// 	obj.u[0] = 1;
-// 	obj.u[1] = 0;
-// 	obj.func = &rt_hit_sphere;
-// 	arr_push(&(info->objs), &obj);
+	//sphere
+	obj.type = OBJ_SPHERE;
+	obj.p = (t_vec3) {2.5, -5, 0};
+	obj.r = (t_vec3) {0, 1, 0};
+	obj.c = (t_vec3) {255, 0, 0};
+	obj.lp[0] = 0;
+	obj.u[0] = 1;
+	obj.u[1] = 0;
+	obj.func = &rt_hit_sphere;
+	obj_arr_push(&(info->objs), &obj);
 
-// /* END OF RED COL */
-// /* GREEN COL */
+/* END OF RED COL */
+/* GREEN COL */
 
-// 	//sphere
-// 	obj.type = OBJ_SPHERE;
-// 	obj.p = (t_vec3) {0, 0, 2.5};
-// 	obj.r = (t_vec3) {0, 0, 0};
-// 	obj.c = (t_vec3) {0, 0, 0};
-// 	obj.a = 0;
-// 	obj.u[0] = 1;
-// 	obj.u[1] = 0;
-// 	obj.func = &rt_hit_sphere;
-// 	arr_push(&(info->objs), &obj);
+	//sphere
+	obj.type = OBJ_SPHERE;
+	obj.p = (t_vec3) {0, 0, 2.5};
+	obj.r = (t_vec3) {0, 0, 0};
+	obj.c = (t_vec3) {0, 0, 0};
+	obj.lp[0] = 0;
+	obj.u[0] = 1;
+	obj.u[1] = 0;
+	obj.func = &rt_hit_sphere;
+	obj_arr_push(&(info->objs), &obj);
 
-// 	//sphere
-// 	obj.type = OBJ_SPHERE;
-// 	obj.p = (t_vec3) {0, -1, 2.5};
-// 	obj.r = (t_vec3) {0, 0, 0};
-// 	obj.c = (t_vec3) {0, 51, 0};
-// 	obj.a = 0;
-// 	obj.u[0] = 1;
-// 	obj.u[1] = 0;
-// 	obj.func = &rt_hit_sphere;
-// 	arr_push(&(info->objs), &obj);
+	//sphere
+	obj.type = OBJ_SPHERE;
+	obj.p = (t_vec3) {0, -1, 2.5};
+	obj.r = (t_vec3) {0, 0, 0};
+	obj.c = (t_vec3) {0, 51, 0};
+	obj.lp[0] = 0;
+	obj.u[0] = 1;
+	obj.u[1] = 0;
+	obj.func = &rt_hit_sphere;
+	obj_arr_push(&(info->objs), &obj);
 
-// 	//sphere
-// 	obj.type = OBJ_SPHERE;
-// 	obj.p = (t_vec3) {0, -2, 2.5};
-// 	obj.r = (t_vec3) {0, 0, 0};
-// 	obj.c = (t_vec3) {0, 102, 0};
-// 	obj.a = 0;
-// 	obj.u[0] = 1;
-// 	obj.u[1] = 0;
-// 	obj.func = &rt_hit_sphere;
-// 	arr_push(&(info->objs), &obj);
+	//sphere
+	obj.type = OBJ_SPHERE;
+	obj.p = (t_vec3) {0, -2, 2.5};
+	obj.r = (t_vec3) {0, 0, 0};
+	obj.c = (t_vec3) {0, 102, 0};
+	obj.lp[0] = 0;
+	obj.u[0] = 1;
+	obj.u[1] = 0;
+	obj.func = &rt_hit_sphere;
+	obj_arr_push(&(info->objs), &obj);
 
-// 	//sphere
-// 	obj.type = OBJ_SPHERE;
-// 	obj.p = (t_vec3) {0, -3, 2.5};
-// 	obj.r = (t_vec3) {0, 0, 0};
-// 	obj.c = (t_vec3) {0, 153, 0};
-// 	obj.a = 0;
-// 	obj.u[0] = 1;
-// 	obj.u[1] = 0;
-// 	obj.func = &rt_hit_sphere;
-// 	arr_push(&(info->objs), &obj);
+	//sphere
+	obj.type = OBJ_SPHERE;
+	obj.p = (t_vec3) {0, -3, 2.5};
+	obj.r = (t_vec3) {0, 0, 0};
+	obj.c = (t_vec3) {0, 153, 0};
+	obj.lp[0] = 0;
+	obj.u[0] = 1;
+	obj.u[1] = 0;
+	obj.func = &rt_hit_sphere;
+	obj_arr_push(&(info->objs), &obj);
 
-// 	//sphere
-// 	obj.type = OBJ_SPHERE;
-// 	obj.p = (t_vec3) {0, -4, 2.5};
-// 	obj.r = (t_vec3) {0, 0, 0};
-// 	obj.c = (t_vec3) {0, 204, 0};
-// 	obj.a = 0;
-// 	obj.u[0] = 1;
-// 	obj.u[1] = 0;
-// 	obj.func = &rt_hit_sphere;
-// 	arr_push(&(info->objs), &obj);
+	//sphere
+	obj.type = OBJ_SPHERE;
+	obj.p = (t_vec3) {0, -4, 2.5};
+	obj.r = (t_vec3) {0, 0, 0};
+	obj.c = (t_vec3) {0, 204, 0};
+	obj.lp[0] = 0;
+	obj.u[0] = 1;
+	obj.u[1] = 0;
+	obj.func = &rt_hit_sphere;
+	obj_arr_push(&(info->objs), &obj);
 
-// 	//sphere
-// 	obj.type = OBJ_SPHERE;
-// 	obj.p = (t_vec3) {0, -5, 2.5};
-// 	obj.r = (t_vec3) {0, 1, 0};
-// 	obj.c = (t_vec3) {0, 255, 0};
-// 	obj.a = 0;
-// 	obj.u[0] = 1;
-// 	obj.u[1] = 0;
-// 	obj.func = &rt_hit_sphere;
-// 	arr_push(&(info->objs), &obj);
+	//sphere
+	obj.type = OBJ_SPHERE;
+	obj.p = (t_vec3) {0, -5, 2.5};
+	obj.r = (t_vec3) {0, 1, 0};
+	obj.c = (t_vec3) {0, 255, 0};
+	obj.lp[0] = 0;
+	obj.u[0] = 1;
+	obj.u[1] = 0;
+	obj.func = &rt_hit_sphere;
+	obj_arr_push(&(info->objs), &obj);
 
 	//cylinder
 	obj.type = OBJ_CYLINDER;
 	obj.p = (t_vec3) {0, 0, 0};
-	obj.r = (t_vec3) {0, 0, 1};
-	obj.c = (t_vec3) {0, 255, 0};
-	obj.a = 0;
-	obj.u[0] = 0.5;
-	obj.u[1] = 0.5;
+	obj.r = (t_vec3) {1, 0, -1};
+	obj.r = vec_norm(&obj.r);
+	obj.c = (t_vec3) {252, 169, 3};
+	obj.lp[0] = 0;
+	obj.u[0] = 1;
+	obj.u[1] = 6;
 	obj.func = &rt_hit_cylinder;
-	arr_push(&(info->objs), &obj);
+	obj_arr_push(&(info->objs), &obj);
+
+	light.b = 0.7;
+	light.c = (t_color) {255, 255, 0};
+	light.p = (t_point3) {-100, 100, 0};
+	l_arr_push(&info->lights, &light);
+
+	light.b = 0.3;
+	light.c = (t_color) {255, 255, 255};
+	light.p = (t_point3) {0, 100, -100};
+	l_arr_push(&info->lights, &light);
 
 	printf("%u objs\n", info->objs.last);
+	printf("%u lights\n", info->lights.last);
 
 	// find camera basis && normalize camera dir
 	info->b.v[0] = (t_vec3){-info->cam.dir.e[2], 0, info->cam.dir.e[0]};
@@ -390,6 +406,7 @@ static int	rt_prepare_scene(t_info *info)
 	printf("dtheta: %f dgamma: %f\n", info->theta / RT_DEG2RAD, info->gamma * 2.0 * info->one_h_windowm1 / RT_DEG2RAD);
 	printf("cost0: %f sint0: %f cost: %f sint: %f\n", info->cost0, info->sint0, info->cost, info->sint);
 	printf("cosg0: %f sing0: %f cosg: %f sing: %f\n", info->cosg0, info->sing0, info->cosg, info->sing);
+	printf("ambient intencity: %f color r: %f g: %f b: %f", info->amb_intencity, info->amb_color.e[0], info->amb_color.e[1], info->amb_color.e[2]);
 	printf("\n");
 	return (0);
 }
@@ -404,7 +421,9 @@ int	rt_init(t_info *info)
 	info->one_h_windowm1 = 1.0 / ((double)info->h_window - 1);
 	if (rt_mlx_init(info))
 		return (rt_error(RT_ERR_INIT, 1));
-	if (arr_init(&(info->objs), 0))
+	if (obj_arr_init(&(info->objs), 0))
+		return (rt_error(RT_ERR_INIT, 1));
+	if (l_arr_init(&info->lights, 0))
 		return (rt_error(RT_ERR_INIT, 1));
 	if (rt_prepare_scene(info))
 		return (rt_error(RT_ERR_INIT, 1));
