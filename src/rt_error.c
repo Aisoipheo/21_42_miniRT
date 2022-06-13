@@ -6,19 +6,20 @@
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 15:32:19 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/04/09 15:18:07 by rdrizzle         ###   ########.fr       */
+/*   Updated: 2022/05/11 18:36:08 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-#include <stdio.h>
 #include <errno.h>
 #include "miniRT.h"
 #include "utils.h"
 
 int	rt_error(const char *msg, char is_lib)
 {
+	write(STDERR_FILENO, "Error\n", 7);
 	if (is_lib)
 		perror(msg);
 	else

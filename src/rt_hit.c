@@ -6,7 +6,7 @@
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 14:04:00 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/04/16 17:19:34 by rdrizzle         ###   ########.fr       */
+/*   Updated: 2022/05/09 19:06:21 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,8 @@ double	rt_hit_sphere(t_object *self, t_ray *r)
 	pc[0] = 1.;
 	pc[1] = 2.0 * vec_dot(&res, &r->dir);
 	pc[2] = vec_dot(&res, &res) - self->u[0] * self->u[0];
-	return rt_solve(pc);
+	return (rt_solve(pc));
 }
-
 
 double	rt_hit_plane(t_object *self, t_ray *r)
 {
@@ -62,9 +61,9 @@ double	rt_hit_plane(t_object *self, t_ray *r)
 	a = vec_dot(&self->r, &r->dir);
 	if (fabs(a) < RT_EPS)
 		return (-1);
-	res = r->orig;
-	b = -(vec_dot(vec_sub(&res, &self->p), &self->r)) * (1.0 / a);
-	if (b < 0)
+	res = self->p;
+	b = (vec_dot(vec_sub(&res, &r->orig), &self->r)) * (1.0 / a);
+	if (b < RT_EPS)
 		return (-1);
 	return (b);
 }

@@ -6,7 +6,7 @@
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 14:04:44 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/04/18 15:56:52 by rdrizzle         ###   ########.fr       */
+/*   Updated: 2022/05/09 19:03:31 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,22 @@
 
 typedef struct s_object	t_object;
 typedef struct s_ray	t_ray;
+typedef struct s_hit	t_hit;
 
-typedef double	(*t_object_hit_ptr)(t_object *, t_ray *);
+typedef double			(*t_object_hit_ptr)(t_object *, t_ray *,
+	t_hit *, double cd);
+typedef t_vec3			(*t_object_normal_ptr)(t_object *, t_hit *);
 
 typedef struct s_object
 {
-	t_vec3				p; // position
-	t_vec3				r; // rotation
-	t_color				c; // color
-	double				lp[2]; // light properties
-	double				u[2]; // parameters
-	t_object_hit_ptr	func;
+	t_vec3				p;
+	t_vec3				r;
+	t_color				c;
+	double				u[2];
+	t_object_hit_ptr	hit;
+	t_object_normal_ptr	norm;
 	int					type;
 }	t_object;
-
 
 typedef struct s_light
 {
@@ -64,7 +66,6 @@ typedef struct s_light
 // CYLINDER
 // u[0] - diameter
 // u[1] - height
-
 
 // void	obj_copy(t_object *lhs, t_object *rhs);
 

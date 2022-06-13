@@ -9,20 +9,31 @@ MLX_DIR				= minilibx_opengl
 MLX					= $(addprefix $(MLX_DIR)/, libmlx.a)
 
 C_FILES				= main.c \
-						benchmark.c \
+						utils.c \
+						utils2.c \
 						vec3.c \
 						vec32.c \
 						vec33.c \
-						utils.c \
 						array.c \
 						array2.c \
 						rt_error.c \
 						rt_hooks.c \
 						rt_init.c \
+						rt_init2.c \
 						rt_render_image.c \
 						rt_hit.c \
 						rt_hit2.c \
+						rt_hit_wrap.c \
+						rt_norm.c \
 						rt_raytrace.c \
+						rt_raytrace2.c \
+						rt_parser.c \
+						rt_parser2.c \
+						rt_parser3.c \
+						rt_ll_obj.c \
+						get_next_line_bonus.c \
+						get_next_line_utils_bonus.c \
+						rt_sky_color.c
 
 BENCH_FILES			= benchmark.c \
 						benchmark_main.c \
@@ -63,7 +74,7 @@ $(OBJS_DIR) :
 $(MLX) :
 	$(MAKE) -C $(MLX_DIR)
 
-$(NAME) : $(SRCS) $(OBJS_DIR) $(OBJS) $(DEPENDENCIES) Makefile $(MLX)
+$(NAME) : $(MLX) $(SRCS) $(OBJS_DIR) $(OBJS) Makefile
 	$(CC) $(LFLAGS) -o $(NAME) $(OBJS)
 
 all : $(NAME)

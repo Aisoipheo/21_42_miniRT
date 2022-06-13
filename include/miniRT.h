@@ -6,7 +6,7 @@
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 16:50:44 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/04/18 15:07:03 by rdrizzle         ###   ########.fr       */
+/*   Updated: 2022/05/11 18:33:45 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@
 # define RT_RAY_DEN 16U
 # define RT_COLOR_SCALE 0.0625
 # define RT_ASPECT_RATIO 1.77777777777777777777777777777777777777777777777777778
+// # define RT_ASPECT_RATIO 1
 # define RT_EPS 1e-8
 # define RT_MAX_BOUNCE 32U
 
@@ -63,8 +64,8 @@
 
 typedef struct s_hit
 {
-	t_vec3	p; // point of intersection
-	double	d; // distance from ray origin to point of intersection
+	t_vec3	p;
+	char	f;
 }	t_hit;
 
 typedef struct s_ray
@@ -74,6 +75,13 @@ typedef struct s_ray
 }	t_ray;
 
 typedef t_ray	t_camera;
+
+typedef struct s_ll_objs
+{
+	t_object	*obj;
+	void		*next;
+	char		*word;
+}	t_ll_objs;
 
 typedef struct s_basis3
 {
@@ -121,25 +129,29 @@ typedef struct s_info
 	double			one_h_windowm1;
 	void			*mlx;
 	void			*window;
-	t_uint			hits[RT_MAX_BOUNCE];
+	t_uint			hits[RT_MAX_BOUNCE + 1];
 	t_mlx_img		screen;
 	t_mlx_img		sky;
 	int				w_window;
 	int				h_window;
+	char			*map;
+	int				prs_flags;
+	t_ll_objs		*llo;
 }	t_info;
 
-void	rt_render_image(t_info *info);
-void	rt_sky_color(t_info *info, t_ray *r, t_color *c);
-void	rt_raytrace(t_info *info, t_ray *r, t_color *c);
+void		rt_render_image(t_info *info);
+void		rt_sky_color(t_info *info, t_ray *r, t_color *c);
+void		rt_raytrace(t_info *info, t_ray *r, t_color *c);
 
-int		rt_error(const char *msg, char is_lib);
-int		rt_init(t_info *info);
-int		rt_destroy(t_info *info);
+int			rt_error(const char *msg, char is_lib);
+int			rt_init(t_info *info);
+int			rt_destroy(t_info *info);
+int			rt_parse_map(t_info *info);
 
-int		rt_exit_hook(t_info *info);
-int		rt_keypress_hook(int key, t_info *info);
-int		rt_mouse_hook(int key, int x, int y, t_info *info);
-int		rt_loop_hook(t_info *info);
+int			rt_exit_hook(t_info *info);
+int			rt_keypress_hook(int key, t_info *info);
+int			rt_mouse_hook(int key, int x, int y, t_info *info);
+int			rt_loop_hook(t_info *info);
 
 double		rt_solve(double *pc);
 double		_rt_hit_cylinder(t_object *self, t_ray *r);
@@ -147,5 +159,34 @@ double		_rt_hit_cylinder_cap(t_object *self, t_ray *r);
 double		rt_hit_plane(t_object *self, t_ray *r);
 double		rt_hit_sphere(t_object *self, t_ray *r);
 double		rt_hit_cylinder(t_object *self, t_ray *r);
+
+double		rt_hit_plane_w(t_object *self, t_ray *r, t_hit *h, double cd);
+double		rt_hit_sphere_w(t_object *self, t_ray *r, t_hit *h, double cd);
+double		rt_hit_cylinder_w(t_object *self, t_ray *r, t_hit *h, double cd);
+
+t_vec3		rt_norm_plane(t_object *self, t_hit *h);
+t_vec3		rt_norm_sphere(t_object *self, t_hit *h);
+t_vec3		rt_norm_cylinder(t_object *self, t_hit *h);
+
+int			parse_camera(t_info *info, char *line, char *word, int i);
+int			parse_ambient(t_info *info, char *line, char *word, int i);
+int			parse_cylinder(t_info *info, char *line, char *word, int i);
+int			parse_sphere(t_info *info, char *line, char *word, int i);
+int			parse_plane(t_info *info, char *line, char *word, int i);
+int			parse_light(t_info *info, char *line, char *word, int i);
+
+t_ll_objs	*new_ll(t_object *obj, char *word);
+void		free_ll(t_ll_objs *ll);
+void		push_ll(t_ll_objs **ll, t_ll_objs *nll);
+
+void		rt_select_objs(t_info *info);
+void		rt_calculate_camera(t_info *info);
+int			rt_check_map(t_info *info);
+
+void		rt_sky_color(t_info *info, t_ray *r, t_color *c);
+
+void		rt_rt_f_2(t_info *info, t_ray *r, t_hit *h, int i);
+void		rt_rt_f_3(t_info *info, t_ray *r,
+				t_ray *view_ray, t_uint objno);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: rdrizzle <rdrizzle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 16:31:31 by rdrizzle          #+#    #+#             */
-/*   Updated: 2022/04/11 16:33:30 by rdrizzle         ###   ########.fr       */
+/*   Updated: 2022/05/11 18:30:23 by rdrizzle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ int	main(int argc, char *argv[])
 {
 	t_info	info;
 
-	(void)argc;
-	(void)argv;
-	debug_init();
+	if (argc != 2)
+		return (rt_error("miniRT: bad number of args", 0));
+	if (ft_check_arg(argv[1]))
+		return (rt_error("miniRT: file extension should be `.rt'", 0));
+	info.map = argv[1];
 	if (rt_init(&info))
 		return (rt_destroy(&info));
 	rt_render_image(&info);
